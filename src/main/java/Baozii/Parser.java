@@ -143,7 +143,7 @@ public class Parser {
         if (tokens.isEmpty()) {
             throw new InvalidCommandException("Oops! That was an empty command!");
         }
-        String command = tokens.getFirst();
+        String command = tokens.get(0);
         if (command.equalsIgnoreCase("todo")) {
             return parseTodo(tokens);
         } else if (command.equalsIgnoreCase("deadline")) {
@@ -164,7 +164,7 @@ public class Parser {
     public Optional<Task> parseTaskFromFile(String s) {
         List<String> tokens = Arrays.stream(s.split("&")).toList();
         if (tokens.isEmpty()) return Optional.empty();
-        String type = tokens.getFirst();
+        String type = tokens.get(0);
         return switch (type) {
             case "T" -> Optional.of(new Todo(tokens.get(1)));
             case "D" -> Optional.of(new Deadline(tokens.get(1), tokens.get(2)));
