@@ -26,6 +26,20 @@ public class TaskList {
         return Optional.of(task);
     }
 
+    public Optional<Task> mark(int i) {
+        if (i < 0 || i >= tasks.size()) return Optional.empty();
+        tasks.get(i).mark();
+        Task task = tasks.get(i);
+        return Optional.of(task);
+    }
+
+    public Optional<Task> unmark(int i) {
+        if (i < 0 || i >= tasks.size()) return Optional.empty();
+        tasks.get(i).unmark();
+        Task task = tasks.get(i);
+        return Optional.of(task);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

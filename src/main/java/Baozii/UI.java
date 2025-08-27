@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class UI {
-    private static final String WELCOME = "Hi! I am Baozii.Baozii. What can I do for you?";
+    private static final String WELCOME = "Hi! I am Baozii. What can I do for you?";
     private static final String GOODBYE = "Bye, have a great day!";
     private final Scanner scanner;
 
@@ -30,7 +30,7 @@ public class UI {
             System.out.println("Successfully added task:");
             System.out.println(t);
         }, () -> {
-            System.out.println("Baozii.Task add unsuccessful");
+            System.out.println("Task add unsuccessful");
         });
     }
 
@@ -39,7 +39,25 @@ public class UI {
             System.out.println("Successfully deleted task:");
             System.out.println(t);
         }, () -> {
-            System.out.println("Baozii.Task delete unsuccessful");
+            System.out.println("Task delete unsuccessful");
+        });
+    }
+
+    public void showMark(Optional<Task> task) {
+        task.ifPresentOrElse(t -> {
+            System.out.println("Successfully marked task:");
+            System.out.println(t);
+        }, () -> {
+            System.out.println("Task mark unsuccessful");
+        });
+    }
+
+    public void showUnmark(Optional<Task> task) {
+        task.ifPresentOrElse(t -> {
+            System.out.println("Successfully unmarked task:");
+            System.out.println(t);
+        }, () -> {
+            System.out.println("Task unmark unsuccessful");
         });
     }
 

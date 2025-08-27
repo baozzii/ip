@@ -30,6 +30,10 @@ public class Baozii {
             } else if (action.type() == ActionType.QUIT) {
                 ui.goodbye();
                 break;
+            } else if (action.type() == ActionType.MARK) {
+                ui.showMark(tasks.mark(action.index()));
+            } else {
+                ui.showUnmark(tasks.unmark(action.index()));
             }
         }
         storage.store(tasks);

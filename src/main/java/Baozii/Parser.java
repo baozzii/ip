@@ -138,6 +138,36 @@ public class Parser {
         return new Action(ActionType.QUIT, null, null);
     }
 
+    private Action parseMark(List<String> tokens) throws InvalidCommandException {
+        if (tokens.size() > 2) {
+            throw new InvalidCommandException("Hmm... I don't recognise this command.");
+        }
+        if (tokens.size() == 1) {
+            throw new InvalidCommandException("Which task do you want to mark?");
+        }
+        try {
+            Integer index = Integer.parseInt(tokens.get(1));
+            return new Action(ActionType.MARK, null, index);
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("It seems like your index is not an integer!");
+        }
+    }
+
+    private Action parseUnmark(List<String> tokens) throws InvalidCommandException {
+        if (tokens.size() > 2) {
+            throw new InvalidCommandException("Hmm... I don't recognise this command.");
+        }
+        if (tokens.size() == 1) {
+            throw new InvalidCommandException("Which task do you want to unmark?");
+        }
+        try {
+            Integer index = Integer.parseInt(tokens.get(1));
+            return new Action(ActionType.UNMARK, null, index);
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("It seems like your index is not an integer!");
+        }
+    }
+
     public Action parse(String s) throws InvalidCommandException {
         List<String> tokens = Arrays.stream(s.split(" ")).filter(msg -> !msg.isEmpty()).toList();
         if (tokens.isEmpty()) {
@@ -156,6 +186,10 @@ public class Parser {
             return parseList(tokens);
         } else if (command.equalsIgnoreCase("bye")) {
             return parseQuit(tokens);
+        } else if (command.equalsIgnoreCase("mark")) {
+            return parseMark(tokens);
+        } else if (command.equalsIgnoreCase("unmark")) {
+            return parseUnmark(tokens);
         } else {
             throw new InvalidCommandException("Hmm... I don't recognise this command.");
         }
