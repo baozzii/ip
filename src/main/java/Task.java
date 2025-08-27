@@ -1,5 +1,5 @@
 public class Task {
-    private String name;
+    private final String name;
     private boolean done;
 
     public Task() {
@@ -22,4 +22,6 @@ public class Task {
     public String toString() {
         return "[" + (done ? "X" : " ") + "] " + name;
     }
+
+    public String toSerial() { return name + "&" + done; }
 }

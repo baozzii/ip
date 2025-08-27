@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Parser {
     public Parser() {}
@@ -156,5 +157,21 @@ public class Parser {
         } else {
             throw new InvalidCommandException("Hmm... I don't recognise this command.");
         }
+    }
+
+    public Optional<Task> parseTaskFromFile(String s) {
+        List<String> tokens = Arrays.stream(s.split("&")).toList();
+        if (tokens.isEmpty()) return Optional.empty();
+        String type = tokens.getFirst();
+        return switch (type) {
+            case "T" -> Optional.of(new Todo(tokens.get(1)));
+            case "D" -> Optional.of(new Deadline(tokens.get(1), tokens.get(2)));
+            case "E" -> Optional.of(new Event(tokens.get(1), tokens.get(2), tokens.get(3)));
+            default -> Optional.empty();
+        };
+    }
+
+    public String serialise(Task task) {
+        return task.toSerial();
     }
 }

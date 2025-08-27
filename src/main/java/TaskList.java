@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.function.Consumer;
 
 public class TaskList {
     private final List<Task> tasks;
@@ -27,5 +28,9 @@ public class TaskList {
 
     public Task get(int i) {
         return tasks.get(i);
+    }
+
+    public void enumerate(Consumer<? super Task> consumer) {
+        for (Task task : tasks) consumer.accept(task);
     }
 }

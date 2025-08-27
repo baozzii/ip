@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.lang.*;
 
@@ -7,6 +13,23 @@ public class Baozii {
         Scanner scanner = new Scanner(System.in);
         TaskList tasks = new TaskList();
         Parser parser = new Parser();
+
+        Path path = Path.of("data.txt");
+        if (!Files.exists(path)) {
+            try {
+                Files.createFile(path);
+            } catch (IOException _) {
+
+            }
+        }
+
+        try (BufferedReader br = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+            for (String line; (line = br.readLine()) != null; ) {
+                parser.parseTaskFromFile(line).ifPresent(tasks::add);
+            }
+        } catch (IOException _) {
+
+        }
 
         while (true) {
             System.out.print(">> ");
@@ -34,6 +57,21 @@ public class Baozii {
                 System.out.println("Bye, have a great day!");
                 break;
             }
+        }
+
+        try {
+            Files.writeString(path, "", StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            tasks.enumerate(task -> {
+                try {
+                    Files.writeString(path, parser.serialise(task) + "\n", StandardCharsets.UTF_8,
+                            StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                } catch (IOException _) {
+
+                }
+            });
+        } catch (IOException _) {
+
         }
     }
 }

@@ -10,4 +10,9 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by: " + this.by + ")";
     }
+
+    @Override
+    public String toSerial() {
+        return "E&" + super.toSerial() + "&" + by;
+    }
 }
