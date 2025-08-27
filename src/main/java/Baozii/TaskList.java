@@ -37,7 +37,7 @@ public class TaskList {
 
     public void store(Path path) throws IOException {
         for (Task task : tasks) {
-            Files.writeString(path, task.toString() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            Files.writeString(path, task.toSerial() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         }
     }
 
