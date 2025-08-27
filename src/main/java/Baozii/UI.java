@@ -1,8 +1,10 @@
+package Baozii;
+
 import java.util.Optional;
 import java.util.Scanner;
 
 public class UI {
-    private static final String WELCOME = "Hi! I am Baozii. What can I do for you?";
+    private static final String WELCOME = "Hi! I am Baozii.Baozii. What can I do for you?";
     private static final String GOODBYE = "Bye, have a great day!";
     private final Scanner scanner;
 
@@ -28,7 +30,7 @@ public class UI {
             System.out.println("Successfully added task:");
             System.out.println(t);
         }, () -> {
-            System.out.println("Task add unsuccessful");
+            System.out.println("Baozii.Task add unsuccessful");
         });
     }
 
@@ -37,11 +39,14 @@ public class UI {
             System.out.println("Successfully deleted task:");
             System.out.println(t);
         }, () -> {
-            System.out.println("Task delete unsuccessful");
+            System.out.println("Baozii.Task delete unsuccessful");
         });
     }
 
     public void showList(TaskList tasks) {
         System.out.println(tasks);
+    }
+    public void showException(Exception e) {
+        System.out.println(e.getMessage());
     }
 }

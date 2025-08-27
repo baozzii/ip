@@ -1,6 +1,7 @@
+package Baozii;
+
 import java.io.IOException;
 import java.lang.*;
-import java.util.Optional;
 
 public class Baozii {
     private final TaskList tasks;
@@ -17,7 +18,7 @@ public class Baozii {
             try {
                 action = parser.parse(msg);
             } catch (InvalidCommandException e) {
-                System.out.println(e.getMessage());
+                ui.showException(e);
                 continue;
             }
             if (action.type() == ActionType.ADD) {
