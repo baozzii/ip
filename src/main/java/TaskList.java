@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -8,29 +13,36 @@ public class TaskList {
         tasks = new ArrayList<>();
     }
 
-    public void add(Task task) {
+    public Optional<Task> add(Task task) {
         tasks.add(task);
+        return Optional.of(task);
     }
 
-    public void delete(Task task) {
-        tasks.remove(task);
-    }
-
-    public void delete(int i) {
+    public Optional<Task> delete(int i) {
+        if (i < 0 || i >= tasks.size()) return Optional.empty();
+        Task task = tasks.get(i);
         tasks.remove(i);
+        return Optional.of(task);
     }
 
-    public void list() {
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(i + ". " + tasks.get(i));
+            sb.append(i).append(". ").append(tasks.get(i)).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public void store(Path path) throws IOException {
+        for (Task task : tasks) {
+            Files.writeString(path, task.toString() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         }
     }
 
-    public Task get(int i) {
-        return tasks.get(i);
-    }
-
-    public void enumerate(Consumer<? super Task> consumer) {
-        for (Task task : tasks) consumer.accept(task);
+    public void load(BufferedReader br, Parser parser) throws IOException {
+        for (String line; (line = br.readLine()) != null; ) {
+            parser.parseTaskFromFile(line).ifPresent(tasks::add);
+        }
     }
 }
