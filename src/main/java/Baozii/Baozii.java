@@ -32,8 +32,10 @@ public class Baozii {
                 break;
             } else if (action.type() == ActionType.MARK) {
                 ui.showMark(tasks.mark(action.index()));
-            } else {
+            } else if (action.type() == ActionType.UNMARK) {
                 ui.showUnmark(tasks.unmark(action.index()));
+            } else {
+                ui.showList(tasks.find(action.pattern()));
             }
         }
         storage.store(tasks);

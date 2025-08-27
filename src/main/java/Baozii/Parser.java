@@ -16,7 +16,7 @@ public class Parser {
             sb.append(tokens.get(i));
             if (i + 1 != tokens.size()) sb.append(" ");
         }
-        return new Action(ActionType.ADD, new Todo(sb.toString().strip()), null);
+        return new Action(ActionType.ADD, new Todo(sb.toString().strip()), null, null);
     }
 
     private Action parseEvent(List<String> tokens) throws InvalidCommandException {
@@ -68,7 +68,8 @@ public class Parser {
             throw new InvalidCommandException("Oops, your event doesn't have a end time!");
         }
         return new Action(ActionType.ADD,
-                new Event(sbname.toString().strip(), sbfrom.toString().strip(), sbto.toString().strip()), null);
+                new Event(sbname.toString().strip(), sbfrom.toString().strip(), sbto.toString().strip()),
+                null, null);
     }
 
     private Action parseDeadline(List<String> tokens) throws InvalidCommandException {
@@ -106,7 +107,8 @@ public class Parser {
         if (sbby.isEmpty()) {
             throw new InvalidCommandException("Oops, your deadline doesn't have a due time!");
         }
-        return new Action(ActionType.ADD, new Deadline(sbname.toString().strip(), sbby.toString().strip()), null);
+        return new Action(ActionType.ADD, new Deadline(sbname.toString().strip(), sbby.toString().strip()),
+                null, null);
     }
 
     private Action parseDelete(List<String> tokens) throws InvalidCommandException {
@@ -118,7 +120,7 @@ public class Parser {
         }
         try {
             Integer index = Integer.parseInt(tokens.get(1));
-            return new Action(ActionType.DELETE, null, index);
+            return new Action(ActionType.DELETE, null, index, null);
         } catch (NumberFormatException e) {
             throw new InvalidCommandException("It seems like your index is not an integer!");
         }
@@ -128,14 +130,14 @@ public class Parser {
         if (tokens.size() > 1) {
             throw new InvalidCommandException("Hmm... I don't recognise this command.");
         }
-        return new Action(ActionType.LIST, null, null);
+        return new Action(ActionType.LIST, null, null, null);
     }
 
     private Action parseQuit(List<String> tokens) throws InvalidCommandException {
         if (tokens.size() > 1) {
             throw new InvalidCommandException("Hmm... I don't recognise this command.");
         }
-        return new Action(ActionType.QUIT, null, null);
+        return new Action(ActionType.QUIT, null, null, null);
     }
 
     private Action parseMark(List<String> tokens) throws InvalidCommandException {
@@ -147,7 +149,7 @@ public class Parser {
         }
         try {
             Integer index = Integer.parseInt(tokens.get(1));
-            return new Action(ActionType.MARK, null, index);
+            return new Action(ActionType.MARK, null, index, null);
         } catch (NumberFormatException e) {
             throw new InvalidCommandException("It seems like your index is not an integer!");
         }
@@ -162,10 +164,22 @@ public class Parser {
         }
         try {
             Integer index = Integer.parseInt(tokens.get(1));
-            return new Action(ActionType.UNMARK, null, index);
+            return new Action(ActionType.UNMARK, null, index, null);
         } catch (NumberFormatException e) {
             throw new InvalidCommandException("It seems like your index is not an integer!");
         }
+    }
+
+    private Action parseFind(List<String> tokens) throws InvalidCommandException {
+        if (tokens.size() == 1) {
+            throw new InvalidCommandException("The description of find cannot be empty!");
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < tokens.size(); i++) {
+            sb.append(tokens.get(i));
+            if (i + 1 != tokens.size()) sb.append(" ");
+        }
+        return new Action(ActionType.FIND, null, null, sb.toString().strip());
     }
 
     /**
@@ -195,6 +209,8 @@ public class Parser {
             return parseMark(tokens);
         } else if (command.equalsIgnoreCase("unmark")) {
             return parseUnmark(tokens);
+        } else if (command.equalsIgnoreCase("find")) {
+            return parseFind(tokens);
         } else {
             throw new InvalidCommandException("Hmm... I don't recognise this command.");
         }

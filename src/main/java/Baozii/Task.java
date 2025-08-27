@@ -26,4 +26,8 @@ public class Task {
     }
 
     public String toSerial() { return name + "&" + done; }
+
+    public boolean match(String s) {
+        return name.contains(s);
+    }
 }

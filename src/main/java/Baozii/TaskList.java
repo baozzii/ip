@@ -71,4 +71,10 @@ public class TaskList {
             parser.parseTaskFromFile(line).ifPresent(tasks::add);
         }
     }
+
+    public TaskList find(String s) {
+        TaskList matched = new TaskList();
+        for (Task task : tasks) if (task.match(s)) matched.add(task);
+        return matched;
+    }
 }
