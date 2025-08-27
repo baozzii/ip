@@ -168,6 +168,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Converts user input into an Action object, which encodes information such as the type of action, task object, and index.
+     * @param s user input
+     * @return Action object
+     */
     public Action parse(String s) throws InvalidCommandException {
         List<String> tokens = Arrays.stream(s.split(" ")).filter(msg -> !msg.isEmpty()).toList();
         if (tokens.isEmpty()) {
@@ -195,6 +200,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Given a serialised string of a task, returns a nullable task object
+     * @param s serialised string
+     * @return a nullable task object
+     */
     public Optional<Task> parseTaskFromFile(String s) {
         List<String> tokens = Arrays.stream(s.split("&")).toList();
         if (tokens.isEmpty()) return Optional.empty();
@@ -207,7 +217,4 @@ public class Parser {
         };
     }
 
-    public String serialise(Task task) {
-        return task.toSerial();
-    }
 }

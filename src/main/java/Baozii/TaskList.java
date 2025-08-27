@@ -49,12 +49,23 @@ public class TaskList {
         return sb.toString();
     }
 
+    /**
+     * Given the path, write the serialised string into the corresponding file for storage.
+     * @param path the given path
+
+     */
     public void store(Path path) throws IOException {
         for (Task task : tasks) {
             Files.writeString(path, task.toSerial() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         }
     }
 
+    /**
+     * Given the bufferedreader, load the tasks using given parser to parse the serialised strings
+     * @param br bufferedreader
+     * @param parser given parser
+
+     */
     public void load(BufferedReader br, Parser parser) throws IOException {
         for (String line; (line = br.readLine()) != null; ) {
             parser.parseTaskFromFile(line).ifPresent(tasks::add);

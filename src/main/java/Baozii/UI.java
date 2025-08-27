@@ -25,6 +25,11 @@ public class UI {
         return scanner.nextLine();
     }
 
+    /**
+     * Given a nullable task, prints whether it is successfully added.
+     * @param task a nullable task object. If it is null, it means the add action was unsuccessful
+
+     */
     public void showAdd(Optional<Task> task) {
         task.ifPresentOrElse(t -> {
             System.out.println("Successfully added task:");
@@ -34,6 +39,11 @@ public class UI {
         });
     }
 
+    /**
+     * Given a nullable task, prints whether it is successfully deleted.
+     * @param task a nullable task object. If it is null, it means the delete action was unsuccessful
+
+     */
     public void showDelete(Optional<Task> task) {
         task.ifPresentOrElse(t -> {
             System.out.println("Successfully deleted task:");
@@ -43,6 +53,11 @@ public class UI {
         });
     }
 
+    /**
+     * Given a nullable task, prints whether it is successfully marked.
+     * @param task a nullable task object. If it is null, it means the mark action was unsuccessful
+
+     */
     public void showMark(Optional<Task> task) {
         task.ifPresentOrElse(t -> {
             System.out.println("Successfully marked task:");
@@ -52,6 +67,11 @@ public class UI {
         });
     }
 
+    /**
+     * Given a nullable task, prints whether it is successfully unmarked.
+     * @param task a nullable task object. If it is null, it means the unmark action was unsuccessful
+
+     */
     public void showUnmark(Optional<Task> task) {
         task.ifPresentOrElse(t -> {
             System.out.println("Successfully unmarked task:");
@@ -61,8 +81,13 @@ public class UI {
         });
     }
 
+    /**
+     * Prints out the tasklist
+     * @param tasks the given tasklist
+
+     */
     public void showList(TaskList tasks) {
-        System.out.println(tasks);
+        System.out.print(tasks);
     }
     public void showException(Exception e) {
         System.out.println(e.getMessage());
