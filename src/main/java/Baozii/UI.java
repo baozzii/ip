@@ -1,28 +1,17 @@
 package Baozii;
 
 import java.util.Optional;
-import java.util.Scanner;
 
 public class UI {
     private static final String WELCOME = "Hi! I am Baozii. What can I do for you?";
     private static final String GOODBYE = "Bye, have a great day!";
-    private final Scanner scanner;
 
-    public UI() {
-        scanner = new Scanner(System.in);
+    public String welcome() {
+        return WELCOME;
     }
 
-    public void welcome() {
-        System.out.println(WELCOME);
-    }
-
-    public void goodbye() {
-        System.out.println(GOODBYE);
-    }
-
-    public String getUserPrompt() {
-        System.out.print(">> ");
-        return scanner.nextLine();
+    public String goodbye() {
+        return GOODBYE;
     }
 
     /**
@@ -30,13 +19,8 @@ public class UI {
      * @param task a nullable task object. If it is null, it means the add action was unsuccessful
 
      */
-    public void showAdd(Optional<Task> task) {
-        task.ifPresentOrElse(t -> {
-            System.out.println("Successfully added task:");
-            System.out.println(t);
-        }, () -> {
-            System.out.println("Task add unsuccessful");
-        });
+    public String showAdd(Optional<Task> task) {
+        return task.map(value -> "Successfully added task: \n" + value).orElse("Task add unsuccessful");
     }
 
     /**
@@ -44,13 +28,8 @@ public class UI {
      * @param task a nullable task object. If it is null, it means the delete action was unsuccessful
 
      */
-    public void showDelete(Optional<Task> task) {
-        task.ifPresentOrElse(t -> {
-            System.out.println("Successfully deleted task:");
-            System.out.println(t);
-        }, () -> {
-            System.out.println("Task delete unsuccessful");
-        });
+    public String showDelete(Optional<Task> task) {
+        return task.map(value -> "Successfully deleted task: \n" + value).orElse("Task delete unsuccessful");
     }
 
     /**
@@ -58,13 +37,8 @@ public class UI {
      * @param task a nullable task object. If it is null, it means the mark action was unsuccessful
 
      */
-    public void showMark(Optional<Task> task) {
-        task.ifPresentOrElse(t -> {
-            System.out.println("Successfully marked task:");
-            System.out.println(t);
-        }, () -> {
-            System.out.println("Task mark unsuccessful");
-        });
+    public String showMark(Optional<Task> task) {
+        return task.map(value -> "Successfully marked task: \n" + value).orElse("Task mark unsuccessful");
     }
 
     /**
@@ -72,22 +46,12 @@ public class UI {
      * @param task a nullable task object. If it is null, it means the unmark action was unsuccessful
 
      */
-    public void showUnmark(Optional<Task> task) {
-        task.ifPresentOrElse(t -> {
-            System.out.println("Successfully unmarked task:");
-            System.out.println(t);
-        }, () -> {
-            System.out.println("Task unmark unsuccessful");
-        });
+    public String showUnmark(Optional<Task> task) {
+        return task.map(value -> "Successfully unmarked task: \n" + value).orElse("Task unmark unsuccessful");
     }
 
-    public void showTag(Optional<Task> task) {
-        task.ifPresentOrElse(t -> {
-            System.out.println("Successfully tagged task:");
-            System.out.println(t);
-        }, () -> {
-            System.out.println("Task tag unsuccessful");
-        });
+    public String showTag(Optional<Task> task) {
+        return task.map(value -> "Successfully tagged task: \n" + value).orElse("Task tag unsuccessful");
     }
 
     /**
@@ -95,10 +59,10 @@ public class UI {
      * @param tasks the given tasklist
 
      */
-    public void showList(TaskList tasks) {
-        System.out.print(tasks);
+    public String showList(TaskList tasks) {
+        return tasks.toString();
     }
-    public void showException(Exception e) {
-        System.out.println(e.getMessage());
+    public String showException(Exception e) {
+        return e.getMessage();
     }
 }
