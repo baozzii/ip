@@ -22,26 +22,20 @@ public class Baozii {
                 ui.showException(e);
                 continue;
             }
-            if (action.type() == ActionType.ADD) {
-                ui.showAdd(tasks.add(action.task()));
-            } else if (action.type() == ActionType.DELETE) {
-                ui.showDelete(tasks.delete(action.index()));
-            } else if (action.type() == ActionType.LIST) {
-                ui.showList(tasks);
-            } else if (action.type() == ActionType.QUIT) {
+            switch (action.type()) {
+            case ADD -> ui.showAdd(tasks.add(action.task()));
+            case DELETE -> ui.showDelete(tasks.delete(action.index()));
+            case LIST -> ui.showList(tasks);
+            case MARK -> ui.showMark(tasks.mark(action.index()));
+            case UNMARK -> ui.showUnmark(tasks.unmark(action.index()));
+            case FIND -> ui.showList(tasks.find(action.pattern()));
+            case QUIT -> {
                 ui.goodbye();
-                break;
-            } else if (action.type() == ActionType.MARK) {
-                ui.showMark(tasks.mark(action.index()));
-            } else if (action.type() == ActionType.UNMARK) {
-                ui.showUnmark(tasks.unmark(action.index()));
-            } else if (action.type() == ActionType.FIND) {
-                ui.showList(tasks.find(action.pattern()));
-            } else {
-                assert false;
+                storage.store(tasks);
+                return;
+            }
             }
         }
-        storage.store(tasks);
     }
 
     public Baozii() {
