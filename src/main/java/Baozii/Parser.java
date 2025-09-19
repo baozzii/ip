@@ -188,11 +188,12 @@ public class Parser {
      * @return Action object
      */
     public Action parse(String s) throws InvalidCommandException {
+        assert s != null;
         List<String> tokens = Arrays.stream(s.split(" ")).filter(msg -> !msg.isEmpty()).toList();
         if (tokens.isEmpty()) {
             throw new InvalidCommandException("Oops! That was an empty command!");
         }
-        String command = tokens.get(0);
+        String command = tokens.get(0).toLowerCase();
         if (command.equalsIgnoreCase("todo")) {
             return parseTodo(tokens);
         } else if (command.equalsIgnoreCase("deadline")) {
@@ -226,10 +227,10 @@ public class Parser {
         if (tokens.isEmpty()) return Optional.empty();
         String type = tokens.get(0);
         return switch (type) {
-            case "T" -> Optional.of(new Todo(tokens.get(1)));
-            case "D" -> Optional.of(new Deadline(tokens.get(1), tokens.get(2)));
-            case "E" -> Optional.of(new Event(tokens.get(1), tokens.get(2), tokens.get(3)));
-            default -> Optional.empty();
+        case "T" -> Optional.of(new Todo(tokens.get(1)));
+        case "D" -> Optional.of(new Deadline(tokens.get(1), tokens.get(2)));
+        case "E" -> Optional.of(new Event(tokens.get(1), tokens.get(2), tokens.get(3)));
+        default -> Optional.empty();
         };
     }
 

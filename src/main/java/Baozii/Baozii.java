@@ -34,8 +34,10 @@ public class Baozii {
                 ui.showMark(tasks.mark(action.index()));
             } else if (action.type() == ActionType.UNMARK) {
                 ui.showUnmark(tasks.unmark(action.index()));
-            } else {
+            } else if (action.type() == ActionType.FIND) {
                 ui.showList(tasks.find(action.pattern()));
+            } else {
+                assert false;
             }
         }
         storage.store(tasks);
