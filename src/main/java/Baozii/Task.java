@@ -30,7 +30,7 @@ public class Task {
         return "[" + (done ? "X" : " ") + "] " + name + (tag == null ? "" : (" #" + tag));
     }
 
-    public String toSerial() { return name + "&" + done; }
+    public String toSerial() { return name + "&" + done + (tag == null ? "" : ("#" + tag)); }
 
     public boolean match(String s) {
         return name.contains(s);
