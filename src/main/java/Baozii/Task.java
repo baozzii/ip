@@ -3,6 +3,7 @@ package Baozii;
 public class Task {
     private final String name;
     private boolean done;
+    private String tag;
 
     public Task() {
         this("");
@@ -20,9 +21,13 @@ public class Task {
         this.done = false;
     }
 
+    public void tag(String tag) {
+        this.tag = tag;
+    }
+
     @Override
     public String toString() {
-        return "[" + (done ? "X" : " ") + "] " + name;
+        return "[" + (done ? "X" : " ") + "] " + name + (tag == null ? "" : (" #" + tag));
     }
 
     public String toSerial() { return name + "&" + done; }

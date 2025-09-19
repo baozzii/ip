@@ -81,6 +81,15 @@ public class UI {
         });
     }
 
+    public void showTag(Optional<Task> task) {
+        task.ifPresentOrElse(t -> {
+            System.out.println("Successfully tagged task:");
+            System.out.println(t);
+        }, () -> {
+            System.out.println("Task tag unsuccessful");
+        });
+    }
+
     /**
      * Prints out the tasklist
      * @param tasks the given tasklist

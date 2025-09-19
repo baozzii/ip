@@ -40,6 +40,13 @@ public class TaskList {
         return Optional.of(task);
     }
 
+    public Optional<Task> tag(int i, String tag) {
+        if (i < 0 || i >= tasks.size()) return Optional.empty();
+        tasks.get(i).tag(tag);
+        Task task = tasks.get(i);
+        return Optional.of(task);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -29,6 +29,7 @@ public class Baozii {
             case MARK -> ui.showMark(tasks.mark(action.index()));
             case UNMARK -> ui.showUnmark(tasks.unmark(action.index()));
             case FIND -> ui.showList(tasks.find(action.pattern()));
+            case TAG -> ui.showTag(tasks.tag(action.index(), action.tag()));
             case QUIT -> {
                 ui.goodbye();
                 storage.store(tasks);

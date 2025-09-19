@@ -16,7 +16,7 @@ public class Parser {
             sb.append(tokens.get(i));
             if (i + 1 != tokens.size()) sb.append(" ");
         }
-        return new Action(ActionType.ADD, new Todo(sb.toString().strip()), null, null);
+        return new Action(ActionType.ADD, new Todo(sb.toString().strip()), null, null, null);
     }
 
     private Action parseEvent(List<String> tokens) throws InvalidCommandException {
@@ -69,7 +69,7 @@ public class Parser {
         }
         return new Action(ActionType.ADD,
                 new Event(sbname.toString().strip(), sbfrom.toString().strip(), sbto.toString().strip()),
-                null, null);
+                null, null, null);
     }
 
     private Action parseDeadline(List<String> tokens) throws InvalidCommandException {
@@ -108,7 +108,7 @@ public class Parser {
             throw new InvalidCommandException("Oops, your deadline doesn't have a due time!");
         }
         return new Action(ActionType.ADD, new Deadline(sbname.toString().strip(), sbby.toString().strip()),
-                null, null);
+                null, null, null);
     }
 
     private Action parseDelete(List<String> tokens) throws InvalidCommandException {
@@ -120,7 +120,7 @@ public class Parser {
         }
         try {
             Integer index = Integer.parseInt(tokens.get(1));
-            return new Action(ActionType.DELETE, null, index, null);
+            return new Action(ActionType.DELETE, null, index, null, null);
         } catch (NumberFormatException e) {
             throw new InvalidCommandException("It seems like your index is not an integer!");
         }
@@ -130,14 +130,14 @@ public class Parser {
         if (tokens.size() > 1) {
             throw new InvalidCommandException("Hmm... I don't recognise this command.");
         }
-        return new Action(ActionType.LIST, null, null, null);
+        return new Action(ActionType.LIST, null, null, null, null);
     }
 
     private Action parseQuit(List<String> tokens) throws InvalidCommandException {
         if (tokens.size() > 1) {
             throw new InvalidCommandException("Hmm... I don't recognise this command.");
         }
-        return new Action(ActionType.QUIT, null, null, null);
+        return new Action(ActionType.QUIT, null, null, null, null);
     }
 
     private Action parseMark(List<String> tokens) throws InvalidCommandException {
@@ -149,7 +149,7 @@ public class Parser {
         }
         try {
             Integer index = Integer.parseInt(tokens.get(1));
-            return new Action(ActionType.MARK, null, index, null);
+            return new Action(ActionType.MARK, null, index, null, null);
         } catch (NumberFormatException e) {
             throw new InvalidCommandException("It seems like your index is not an integer!");
         }
@@ -164,7 +164,7 @@ public class Parser {
         }
         try {
             Integer index = Integer.parseInt(tokens.get(1));
-            return new Action(ActionType.UNMARK, null, index, null);
+            return new Action(ActionType.UNMARK, null, index, null, null);
         } catch (NumberFormatException e) {
             throw new InvalidCommandException("It seems like your index is not an integer!");
         }
@@ -179,7 +179,25 @@ public class Parser {
             sb.append(tokens.get(i));
             if (i + 1 != tokens.size()) sb.append(" ");
         }
-        return new Action(ActionType.FIND, null, null, sb.toString().strip());
+        return new Action(ActionType.FIND, null, null, sb.toString().strip(), null);
+    }
+
+    private Action parseTag(List<String> tokens) throws InvalidCommandException {
+        if (tokens.size() <= 2) {
+            throw new InvalidCommandException("The description of tag cannot be empty!");
+        }
+        try {
+            Integer index = Integer.parseInt(tokens.get(1));
+            StringBuilder sb = new StringBuilder();
+            for (int i = 2; i < tokens.size(); i++) {
+                sb.append(tokens.get(i));
+                if (i + 1 != tokens.size()) sb.append(" ");
+            }
+            return new Action(ActionType.TAG, null, index, null, sb.toString());
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException("It seems like your index is not an integer!");
+        }
+
     }
 
     /**
@@ -212,9 +230,12 @@ public class Parser {
             return parseUnmark(tokens);
         } else if (command.equalsIgnoreCase("find")) {
             return parseFind(tokens);
+        } else if (command.equalsIgnoreCase("tag")) {
+            return parseTag(tokens);
         } else {
             throw new InvalidCommandException("Hmm... I don't recognise this command.");
         }
+
     }
 
     /**
