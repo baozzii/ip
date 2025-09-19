@@ -14,6 +14,7 @@ public class Baozii {
         ui.welcome();
         while (true) {
             String msg = ui.getUserPrompt();
+            assert msg != null;
             Action action;
             try {
                 action = parser.parse(msg);
