@@ -23,6 +23,7 @@ public class Baozii {
 
     public String getResponse(String msg) {
         assert msg != null;
+        if (msg.isEmpty()) return ui.welcome();
         Action action;
         try {
             action = parser.parse(msg);

@@ -11,7 +11,7 @@ public class TaskTest {
         Task task = new Task("test");
         task.mark();
         task.tag("tag");
-        assertEquals(task.toString(), "[X] test # tag");
+        assertEquals("[X] test #tag", task.toString());
     }
 
     @Test
@@ -20,6 +20,6 @@ public class TaskTest {
         Task task = new Task("test");
         task.mark();
         task.tag("tag");
-        assertEquals(task.toString(), "test&false#tag");
+        assertEquals("test&true#tag", task.toSerial());
     }
 }
